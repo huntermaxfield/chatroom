@@ -9,10 +9,18 @@
     <div class="main-container">
       <h1> DevMountain Chat Room </h1>
       <form ng-submit="postData()">
-        <input class="form-control text-box" type="text" ng-model="message" placeholder="Message">
+        <input class="form-control text-box" ng-model="message" placeholder="Message" name="form" ng-click="reset()">
+      </form>
+      <form>
+        <input class="form-control text-box" ng-model="filterBy" placeholder="Filter">
+        <select ng-model="sortByDate" class="sortOpt">
+          <option value=true>Newest</option>
+          <option value=false>Oldest</option>
+        </select>
       </form>
       <div class="messages-container">
-        <p ng-repeat="message in messages"> {{message.text}} </p>
+        <p class='message' ng-repeat="message in messages | filter: filterBy | orderBy: 'createdAt' :
+        sortByDate" >{{upTime(message.createdAt) | date: 'MM/dd/yyyy'}} >>> <br>{{message.text}} </p>
       </div>
     </div>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
@@ -21,5 +29,6 @@
     <script src="js/mainCtrl.js"></script>
     <script src="js/parseService.js"></script>
     <script src="js/defaultHeaders.js"></script>
+
   </body>
 </html>
